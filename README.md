@@ -49,6 +49,6 @@ $f_{DM} = 1 - \frac{M*}{M_{dyn}}$
 
 with $M_{dyn}$ extracted from the Virial theorem : 
 
-$M_{dyn}(r \inf R_e) = \frac{K R_e\sigma^2(r\inf R_e)}{G}$
+$M_{dyn}(r \textless R_e) = \frac{K R_e\sigma^2(r\textless R_e)}{G}$
 
 and assuming $K = 5$ (http://dx.doi.org/10.1111/j.1365-2966.2005.09981.x).
