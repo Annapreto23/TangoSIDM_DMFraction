@@ -4,7 +4,8 @@
 
 
 The dataset from Cappellari (merged from 2 datasets : https://ui.adsabs.harvard.edu/abs/2013MNRAS.432.1709C/abstract and https://ui.adsabs.harvard.edu/abs/2013MNRAS.432.1862C/abstract) 
-consists of early-type galaxies, which include elliptical galaxies (Es) and lenticular galaxies (S0s). The dataset specifically includes a sample of 260 such galaxies. The stellar mass range covered by this dataset is approximately greater than or equal to $6
+consists of early-type galaxies, which include elliptical galaxies (Es) and lenticular galaxies (S0s). The dataset specifically 
+includes a sample of 260 such galaxies. The stellar mass range covered by this dataset is approximately greater than or equal to $6
 \times 10^9$ solar masses ($M_{\odot}$). We directly use the dark matter fraction from the dataset and the mass-to-light ratio 
 (Cappellari assuming a Salpeter IMF) and using also the luminosity in the r-band, we derive the stellar mass. To have the stellar 
 masses calculated assuming a Chabrier IMF we need to substract the stellar mass from 0.25 dex (section 4.1 in this work 
