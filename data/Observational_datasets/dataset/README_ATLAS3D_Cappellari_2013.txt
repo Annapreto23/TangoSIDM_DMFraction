@@ -5,7 +5,6 @@
 #--------------------------------------------------------------------------------
 #    Units         Label                  Explanations
 #--------------------------------------------------------------------------------
-#    ---           Galaxy                 Galaxy Name
 #    Msun          M*                     Stellar Mass
 #    kpc           Reff                   Effective Radius at [3.6]
 #    ---           fDM(Reff)              Dark Matter Fraction within Reff
