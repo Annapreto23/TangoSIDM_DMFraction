@@ -1,6 +1,18 @@
 ## Datasets Description
 
-###  Cappellari+16
+#================================================================================
+#Description of file: BEZANSON15.csv
+#--------------------------------------------------------------------------------
+#    Units         Label                  Explanations
+#--------------------------------------------------------------------------------
+#    ---           Galaxy                 Galaxy Name
+#    Msun          M*                     Stellar Mass
+#    kpc           Reff                   Effective Radius at [3.6]
+#    ---           fDM(Reff)              Dark Matter Fraction within Reff
+#    ---           sigma_fdm(Reff)        Error on fDM(Reff)
+#================================================================================
+
+###  Cappellari+13
 
 
 The dataset from Cappellari (merged from 2 datasets : https://ui.adsabs.harvard.edu/abs/2013MNRAS.432.1709C/abstract and 
