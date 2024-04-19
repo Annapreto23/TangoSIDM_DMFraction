@@ -1,5 +1,17 @@
 ## Datasets Description
 
+#================================================================================
+#Description of file: BEZANSON15.csv
+#--------------------------------------------------------------------------------
+#    Units         Label                  Explanations
+#--------------------------------------------------------------------------------
+#    ---           Galaxy                 Galaxy Name
+#    Msun          M*                     Stellar Mass
+#    kpc           Reff                   Effective Radius at [3.6]
+#    ---           fDM(Reff)              Dark Matter Fraction within Reff
+#    ---           sigma_fdm(Reff)        Error on fDM(Reff)
+#================================================================================
+
 ### Bezanson+15
 
 The dataset from Bezanson et al. 2015 includes 103  early- and late-type, or alternatively quiescent an 
