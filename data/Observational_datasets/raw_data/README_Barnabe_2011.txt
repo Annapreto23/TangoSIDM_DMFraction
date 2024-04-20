@@ -20,3 +20,6 @@ lenses."
 "Fig shows the corresponding dark matter fractions within re"
 
 f_DM ≡ 1 - M∗,e / Mtot,e -> 'e' for effective radius
+
+
+We took the stellar masses used by Barnabé 2011 from Auger et al. (2009). With this dataset we also checked the galaxies type of our sample and decided to exclude one galaxie with a S type. 
