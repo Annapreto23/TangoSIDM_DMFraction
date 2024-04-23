@@ -1,10 +1,18 @@
-"In this paper, we examine the stellar kinematics of NGC 1277
-and NGC 1278 and produce detailed dynamical Jeans models
-with JAM1"
+## Datasets Description
 
-"The goal of this article is to describe the dark matter distribution of NGC 1277 out to an unprecedented radius of five effective
-radii (5 Re, corresponding to 6 kpc). Because of the relic nature
-of the target, this is equivalent to studying the dark matter halo
-properties of a massive ETG at z & 2."
+#================================================================================
+#Description of file: ../dataset/COMERON11.csv
+#--------------------------------------------------------------------------------
+#    Units         Label                  Explanations
+#--------------------------------------------------------------------------------
+#    Msun          M*                     Stellar Mass
+#    kpc           Reff                   Effective Radius at [3.6]
+#    ---           fDM(Reff)              Dark Matter Fraction within Reff
+#    ---           +sigma_fdm(Reff)       High error on fDM(Reff)
+#    ---           -sigma_fdm(Reff)       Low error on fDM(Reff)
+#================================================================================
 
-"Chabrier IMF turn into a Salpeter"
+###  Comeron+11 https://ui.adsabs.harvard.edu/abs/2023A%26A...675A.143C/abstract
+
+
+By using Jeans anisotropic modelling, Comeron et al. calculated the dark matter fractions within a radius of five effective radii for two galaxies: a regular massive ETG (NGC 1278) and a relic one (NGC 1277) at a redshift z = 0.016898. They used a Salpeter IMF.
