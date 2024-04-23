@@ -1,25 +1,25 @@
-Quotes to rewrite correctly : https://arxiv.org/pdf/1102.2261.pdf
+Quotes to rewrite correctly : 
+
+## Datasets Description
+
+#================================================================================
+#Description of file: ../dataset/BARNABE.csv
+#--------------------------------------------------------------------------------
+#    Units         Label                  Explanations
+#--------------------------------------------------------------------------------
+#    Msun          M*                     Stellar Mass
+#    ---           fDM(Reff)              Dark Matter Fraction within Reff
+#    ---           +sigma_fdm(Reff)       High error on fDM(Reff)
+#    ---           -sigma_fdm(Reff)       Low error on fDM(Reff)
+#================================================================================
+
+### Barnabé+11 https://arxiv.org/pdf/1102.2261.pdf
 
 
-"We combine in a self-consistent way the constraints from both gravitational lensing and stellar kinematics to perform a detailed investigation of the internal mass distribution, amount of
-dark matter, and dynamical structure of the sixteen early-type lens galaxies from the SLACS
-Survey, at z = 0.08 − 0.33, for which both HST/ACS and NICMOS high-resolution imaging
-and VLT VIMOS integral-field spectroscopy are available. Based on this data set, we analyze
-the inner regions of the galaxies, i.e. typically within one (three-dimensional) effective radius
-re, under the assumption of axial symmetry and by constructing dynamical models supported
-by two-integral stellar distribution functions (DFs)." 
+Barnabé et al. investigated the internal mass distribution, amount of dark matter, and dynamical structure of sixteen early-type lens galaxies from the SLACS Survey, at z = 0.08 − 0.33. They analyzed the inner regions of the galaxies, i.e., within one effective radius. They assumed either a Chabrier (2003) or a Salpeter (1955) IMF. We are using their dark matter fractions based on a Chabrier IMF to construct our dataset. Their stellar mass values are taken from the stellar population analysis performed by Auger et al. (2009), and their total mass values are derived from a model of the total mass density profile of the lens galaxy with an axially symmetric power-law distribution. Then, they calculated the dark matter fraction as follows:
 
-"While calculating a lower limit for the dark matter content is useful, galaxies need not have maximal bulges. We therefore set the
-scale for the luminous mass profiles by adopting, for each system,
-the stellar mass inferred from stellar population synthesis models,
-assuming either a Chabrier (2003) or a Salpeter (1955) IMF. We
-use stellar mass values taken from the stellar population analysis performed by Auger et al. (2009) on a data set constituted by
-deep, high-resolution, multi-band HST observations of the SLACS
-lenses."
+$ f_{\text{DM}} \equiv 1 - \frac{M_{\ast,e}}{M_{\text{tot},e}} $
 
-"Fig shows the corresponding dark matter fractions within re"
+Here, 'e' denotes 'within the effective radius'. 
 
-f_DM ≡ 1 - M∗,e / Mtot,e -> 'e' for effective radius
-
-
-We took the stellar masses used by Barnabé 2011 from Auger et al. (2009). With this dataset we also checked the galaxies type of our sample and decided to exclude one galaxie with a S type. 
+We also took the stellar masses used by Barnabé in 2011 from Auger et al. (2009). With this dataset, we also checked the galaxy types in our sample and decided to exclude one galaxy with an S type.
