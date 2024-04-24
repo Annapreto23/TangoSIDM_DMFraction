@@ -1,6 +1,19 @@
-#Galaxy log σe R(σ)/Re log σkpc inc log(M/L)JAM log V max
-#circ qual log R maj e log Re log r1/2 log rg conc εe log L
-#(km s−1) (km s−1) (◦) (M/Lr) (km s−1) (00) (00) (00) (00) (Lr)
+# Table 1 from Capellari et al. (2013a)
+#(1) Galaxy Name
+#(2) log σe [km/s]
+#(3) R(σ)/Re
+#(4) log σkpc [km/s]
+#(5) inc
+#(6) log(M/L)_JAM 
+#(7) log V^max_circ [km/s]
+#(8) quality flag [qual < 2 == poor]
+#(9) log Re maj [arcsec]
+#(10) log Re [arcsec]
+#(11) log r1/2 [arcsec]
+#(12) log rg [arcsec]
+#(13) conc
+#(14) εe
+#(15) log L [Lsun_rband]
 #(1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15)
 IC0560 1.879 0.97 1.885 73 0.486 2.114 2 1.352 1.154 1.248 1.659 0.458 0.577 9.566
 IC0598 1.996 1.00 1.964 75 0.439 2.215 2 1.148 0.956 1.109 1.551 0.397 0.567 9.828
