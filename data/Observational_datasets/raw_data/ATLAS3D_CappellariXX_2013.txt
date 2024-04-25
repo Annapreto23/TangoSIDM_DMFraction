@@ -1,5 +1,9 @@
-#Galaxy log σ(Re/8) fDM(r = Re) log (M/L)stars log (M/L)Salp
-#(km s−1) (M/Lr) (M/Lr)
+# Table 1 from Capellari et al. (2013b)
+#(1) Galaxy Name
+#(2) log σ(Re/8) [km/s]
+#(3) fDM(r = Re)
+#(4) log (M/L)stars [Msun/Lsun_rband]
+#(5) log (M/L)Salp [Msun/Lsun_rband]
 #(1) (2) (3) (4) (5)
 IC0560 1.920 0.12 0.429 0.381
 IC0598 2.001 0.24 0.268 0.364
