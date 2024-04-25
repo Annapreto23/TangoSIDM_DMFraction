@@ -1,23 +1,13 @@
-TO DO: Add details of dataset from Li et al. (2023) (https://ui.adsabs.harvard.edu/abs/2024MNRAS.tmp..878L/abstract)
+MaNGA dataset taken from https://github.com/Shubo143/MaNGADensitySlope/tree/main
+based on the analysis of Li et al. (2023) (https://ui.adsabs.harvard.edu/abs/2024MNRAS.tmp..878L/abstract)
 
+Li et al. use the results from the best Jeans Anisotropic Modelling of the integral-field stellar kinematics 
+for near 6000 galaxies from the MaNGA DynPop project, with stellar masses between 10^9-10^12 Msun. The database
+includes both early-type and late-type galaxies.
 
-Not sure about which plot we are using to make the csv file.
+We convert stellar masses to a Chabrier IMF.
 
-". We use the resultsfrom the bestJeans
-Anisotropic Modelling (JAM) of the integral-field stellar kinematics for near 6000 galaxies from the MaNGA DynPop project,
-with stellar masses 109 M  M∗  1012 M, including both early-type and late-type galaxies."
-
-"Chabrier IMF"
-
-"We select galaxies with an acceptable visual modelling
-quality (i.e. Qual ⩾ 1) to ensure that the density slopes are reliable.
-For these approximately 6000 galaxies, we require the difference in
-the mass-weighted total density slope between JAMcyl and JAMsph
-modelling (see Section 3.1) is smaller than three times of 0.079,
-which is the observed root-mean-square (rms) scatter of this dynamical property among different model assumptions for galaxies with
-Qual = 1 (see Fig. 13 and Table 3 of Paper I), to ensure the reliability of our conclusion. In result, our final MaNGA sample includes
-5688 galaxies. For more information of modelling qualities and the
-dynamical modeling, readers are referred to Paper I.
-"
-
-"We add the filtering condition  | 𝑓DM,cyl − 𝑓DM,sph| < 0.1, to improve the accuracy of measuring the dark matter fraction."
+We follow Li et al. and select galaxies with a quality flag > 1 to ensure that the modelling of the mass profile is reliable.
+For these approximately 6000 galaxies, we require the difference in the mass-weighted total density slope between 
+JAMcyl and JAMsph modelling is smaller than three times of 0.079, which is the observed root-mean-square scatter of the dynamical property among different model assumptions for galaxies with Qual = 1. Finally, we add a filtering condition: 
+|𝑓DM,cyl − 𝑓DM,sph| < 0.1, to improve the accuracy of the dark matter fraction estimations.
