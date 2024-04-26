@@ -5,7 +5,7 @@
 |-------|---------------|------------------------------------|
 | ---   | Galaxy        | Galaxy Name                        |
 | Msun  | M*            | Stellar Mass                       |
-| kpc   | Reff          | Effective Radius at [3.6]          |
+| kpc   | Reff          | Effective Radius                   |
 | ---   | fDM(Reff)     | Dark Matter Fraction within Reff   |
 | ---   | Errorfdm(Reff)| Error on fDM(Reff)                 |
 | ---   | Q             | Quality Flag (1 = High, 2 = Medium, 3 = Low)
