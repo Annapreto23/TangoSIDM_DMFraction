@@ -1,4 +1,3 @@
-M*,fDM(Reff),Reff,+sigma_fdm(Reff),-sigma_fdm(Reff)
-[Msun],None,kpc,None,None
+M*[Msun],fDM(Reff),Reff[kpc],+ErrorfDM,-ErrorfDM
 13000000000.0,0.02,1.2,0.0,0.0
 290000000000.0,0.1,4.2,0.13,0.08
