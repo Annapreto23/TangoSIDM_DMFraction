@@ -19,7 +19,7 @@ all 𝑘-corrected to 𝑧 = 0 and corrected for Galactic and internal extinctio
 Stellar masses were estimated following Bell et al. (2003), converted to a Chabrier IMF.
 
 > Caution! We estimated the stellar mass within the half-light radii by dividing by 2 the total stellar masses. 
-To convert from half-mast radii to half-light radii we follow de Graaf et al. (2021) (https://arxiv.org/pdf/2110.02235),
+To convert from half-mass radii to half-light radii we follow de Graaf et al. (2021) (https://arxiv.org/pdf/2110.02235),
 and Suess et al. (2019) (https://arxiv.org/pdf/1910.06984) who have concluded that half-light radii are larger than
 half-mass radii by typically 25%. 
 
