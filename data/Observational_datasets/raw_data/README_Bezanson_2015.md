@@ -7,7 +7,7 @@
 | Msun  | M*            | Stellar Mass                       |
 | kpc   | Reff          | Effective Radius at [3.6]          |
 | ---   | fDM(Reff)     | Dark Matter Fraction within Reff   |
-| ---   | sigma_fdm(Reff) | Error on fDM(Reff)                |
+| ---   | ErrorfDM      | Error on fDM(Reff)                |
 
 
 ### Bezanson+15
