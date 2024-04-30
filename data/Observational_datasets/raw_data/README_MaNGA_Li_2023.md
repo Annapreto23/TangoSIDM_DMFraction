@@ -1,3 +1,16 @@
+#To complete
+
+## Datasets Description
+
+| Units | Label     | Explanations 
+|-------|-----------|--------------
+| ---   | PlateIFU  | Plate IFU
+| ---   | MaNGAID   | MaNGA ID
+| Msun  | M*        | Stellar Mass 
+| ---   | fDM(Reff) | Dark Matter Fraction within Reff 
+| kpc   | Reff      | Effective Radius        
+| ---   | Q         | Quality Flag (Q<2 == poor)      
+
 MaNGA dataset taken from https://github.com/Shubo143/MaNGADensitySlope/tree/main
 based on the analysis of Li et al. (2023) (https://ui.adsabs.harvard.edu/abs/2024MNRAS.tmp..878L/abstract)
 
