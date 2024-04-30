@@ -27,4 +27,4 @@ The dark matter fraction, fDM, is then calculated as follows
 
 $$f_{DM} = \frac{M_{total} - M_{stellar}}{M_{total}}$$
 
-where M_{total} = Vcirc^2 Reff / G, here Vcirc = Vcirc(Reff).
+where $M_{total} = Vcirc^2 Reff / G, here Vcirc = Vcirc(Reff)$.
