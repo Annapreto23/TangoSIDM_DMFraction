@@ -6,8 +6,8 @@
 | Msun  | M*            | Stellar Mass                       |
 | kpc   | Reff          | Effective Radius at [3.6]          |
 | ---   | fDM(Reff)     | Dark Matter Fraction within Reff   |
-| ---   | +sigma_fdm(Reff) | High error on fDM(Reff)          |
-| ---   | -sigma_fdm(Reff) | Low error on fDM(Reff)           |
+| ---   | +ErrorfDM     | High error on fDM(Reff)            |
+| ---   | -ErrorfDM     | Low error on fDM(Reff)             |
 
 
 ### Comeron+11 [link](https://ui.adsabs.harvard.edu/abs/2023A%26A...675A.143C/abstract)
