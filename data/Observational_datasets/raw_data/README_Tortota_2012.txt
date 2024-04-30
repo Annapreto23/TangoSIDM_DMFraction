@@ -1,6 +1,14 @@
-To complete
+#To complete
 
 https://arxiv.org/pdf/1201.2945.pdf
+
+
+## Datasets Description
+
+| Units | Label     | Explanations 
+|-------|-----------|--------------
+| Msun  | M*        | Stellar Mass 
+| ---   | fDM(Reff) | Dark Matter Fraction within Reff 
 
 
 "We analyze the central dark-matter (DM) content of ∼ 4, 500 massive (M⋆ >∼
