@@ -1,58 +1,58 @@
-Title: Rotational Widths for Use in the Tully-Fisher Relation. I. Long-slit 
-       Spectroscopic Data  
-Authors: Catinella B., Haynes M.P., Giovanelli R. 
-Table: Palomar Rotation Curve Data
-================================================================================
-Byte-by-byte Description of file: datafile1.txt
---------------------------------------------------------------------------------
-   Bytes Format Units   Label Explanations
---------------------------------------------------------------------------------
-   1-  6 I6     ---     Num   Private database identification code (1)
-   8- 15 A8     ---     OName Other name (2)
-  17- 18 I2     h       RAh   Hour of Right Ascension (J2000) (3)
-  20- 21 I2     min     RAm   Minute of Right Ascension (J2000) (3)
-  23- 26 F4.1   s       RAs   Second of Right Ascension (J2000) (3)
-      28 A1     ---     DE-   Sign of the Declination (J2000) (3)
-  29- 30 I2     deg     DEd   Degree of Declination (J2000) (3)
-  32- 33 I2     arcmin  DEm   Arcminute of Declination (J2000) (3)
-  35- 36 I2     arcsec  DEs   Arcsecond of Declination (J2000) (3)
-  38- 39 A2     ---     T     The RC3 catalog morphology (4)
-  41- 45 F5.1   arcsec  ROpt  ? Optical radius, corresponding to the isophote
-                               that includes 83% of the I band flux
-  47- 51 F5.1   arcsec  RMax  ? Maximum radial distance to which the 
-                               folded RC is sampled 
-  53- 57 F5.1   km/s    V0    ? Polyex fit amplitude 
-  59- 64 F6.3   arcsec  rPE   ? Polyex fit exponential scale of the inner region
-  66- 72 F7.4   ---     alpha ? Polyex fit slope of the outer part of the RC 
-      74 I1     ---     Q     ? Polyex fit flag (5) 
-  76- 80 I5     km/s    V80   Heliocentric velocity from the RC velocity 
-                               histogram (6)
-  82- 84 I3     km/s    W80   Velocity width from the RC velocity histogram
-                               corrected for cosmological broadening only (7)
-  86- 90 I5     km/s    VPE   ? Heliocentric velocity from the Polyex fit
-  92- 93 I2     km/s  e_VPE   ? Uncertainty in VPE 
-  95- 97 I3     km/s    WPE   ? Velocity width from the Polyex fit corrected
-                               for cosmological broadening only
-  99-100 I2     km/s  e_WPE   ? Uncertainty in WPE 
---------------------------------------------------------------------------------
-Note (1): Referred to as the Arecibo General Catalog (AGC). If a galaxy is also
-          listed in the UGC catalog (Nilson 1973), its UGC and AGC codes are 
-          identical.
-Note (2): NGC or IC designation, or other name, typically from the CGCG 
-          (Zwicky et al. 1961-68) or MCG (Vorontsov-Velyaminov & Arhipova 1968)
-          catalogs. CGCG numbers are listed in the form: field number-ordinal 
-          number within the field; MCG designations are abbreviated to eight
-          characters.
-Note (3): Coordinates have been obtained from the Digitized Sky Survey catalog
-          and are accurate to within 2 arcseconds.
-Note (4): Code 1 corresponds to Sa, code 3 to Sb, code 5 to Sc, etc. A ``B'' 
-          following the type code indicates the presence of an identifiable bar.
-Note (5):
-    1 = good or acceptable fit;
-    0 = poor fit.
-Note (6): Where V80 = (V10+V90)/2
-Note (7): Where W80 = V90-V10.
---------------------------------------------------------------------------------
+#Title: Rotational Widths for Use in the Tully-Fisher Relation. I. Long-slit 
+#       Spectroscopic Data  
+#Authors: Catinella B., Haynes M.P., Giovanelli R. 
+#Table: Palomar Rotation Curve Data
+#================================================================================
+#Byte-by-byte Description of file: datafile1.txt
+#--------------------------------------------------------------------------------
+#   Bytes Format Units   Label Explanations
+#--------------------------------------------------------------------------------
+#   1-  6 I6     ---     Num   Private database identification code (1)
+#   8- 15 A8     ---     OName Other name (2)
+#  17- 18 I2     h       RAh   Hour of Right Ascension (J2000) (3)
+#  20- 21 I2     min     RAm   Minute of Right Ascension (J2000) (3)
+#  23- 26 F4.1   s       RAs   Second of Right Ascension (J2000) (3)
+#      28 A1     ---     DE-   Sign of the Declination (J2000) (3)
+#  29- 30 I2     deg     DEd   Degree of Declination (J2000) (3)
+#  32- 33 I2     arcmin  DEm   Arcminute of Declination (J2000) (3)
+#  35- 36 I2     arcsec  DEs   Arcsecond of Declination (J2000) (3)
+#  38- 39 A2     ---     T     The RC3 catalog morphology (4)
+#  41- 45 F5.1   arcsec  ROpt  ? Optical radius, corresponding to the isophote
+#                               that includes 83% of the I band flux
+#  47- 51 F5.1   arcsec  RMax  ? Maximum radial distance to which the 
+#                               folded RC is sampled 
+#  53- 57 F5.1   km/s    V0    ? Polyex fit amplitude 
+#  59- 64 F6.3   arcsec  rPE   ? Polyex fit exponential scale of the inner region
+#  66- 72 F7.4   ---     alpha ? Polyex fit slope of the outer part of the RC 
+#      74 I1     ---     Q     ? Polyex fit flag (5) 
+#  76- 80 I5     km/s    V80   Heliocentric velocity from the RC velocity 
+#                               histogram (6)
+#  82- 84 I3     km/s    W80   Velocity width from the RC velocity histogram
+#                               corrected for cosmological broadening only (7)
+#  86- 90 I5     km/s    VPE   ? Heliocentric velocity from the Polyex fit
+#  92- 93 I2     km/s  e_VPE   ? Uncertainty in VPE 
+#  95- 97 I3     km/s    WPE   ? Velocity width from the Polyex fit corrected
+#                               for cosmological broadening only
+#  99-100 I2     km/s  e_WPE   ? Uncertainty in WPE 
+#--------------------------------------------------------------------------------
+#Note (1): Referred to as the Arecibo General Catalog (AGC). If a galaxy is also
+#          listed in the UGC catalog (Nilson 1973), its UGC and AGC codes are 
+#          identical.
+#Note (2): NGC or IC designation, or other name, typically from the CGCG 
+#          (Zwicky et al. 1961-68) or MCG (Vorontsov-Velyaminov & Arhipova 1968)
+#          catalogs. CGCG numbers are listed in the form: field number-ordinal 
+#          number within the field; MCG designations are abbreviated to eight
+#          characters.
+#Note (3): Coordinates have been obtained from the Digitized Sky Survey catalog
+#          and are accurate to within 2 arcseconds.
+#Note (4): Code 1 corresponds to Sa, code 3 to Sb, code 5 to Sc, etc. A ``B'' 
+#          following the type code indicates the presence of an identifiable bar.
+#Note (5):
+#    1 = good or acceptable fit;
+#    0 = poor fit.
+#Note (6): Where V80 = (V10+V90)/2
+#Note (7): Where W80 = V90-V10.
+#--------------------------------------------------------------------------------
      5 382-021  00 03 05.5 -01 54 51 4B  31.5  30.8 248.4  7.220 -0.0289 1  7303 420  7299 03 418 05 
    140 N 52     00 14 40.2 +18 34 55 3   45.1  47.8 374.0 20.576 -0.0823 1  5417 491  5414 08 535 11 
    144 456-044  00 15 26.8 +16 14 05 4   22.9  13.1 124.9  5.000  0.0150 0  5656 211  5640 18 259 25 
