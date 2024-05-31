@@ -22,15 +22,15 @@ class classhalo:
 
             # Halo_data attributes
             self.AxisRadius = halo_data_group["AxisRadius"][:]
-            self.CrossSection = halo_data_group["CrossSection"][:, select]
+            #self.CrossSection = halo_data_group["CrossSection"][:, select]
             self.MeanCrossSection = halo_data_group["MeanCrossSection"][:, select]
             
-            self.ReCrossSection = halo_data_group["ReCrossSection"][0, select]
-            self.ReMeanCrossSection = halo_data_group["ReMeanCrossSection"][0, select]
-            self.R12CrossSection = halo_data_group["R12CrossSection"][0, select]
-            self.R12MeanCrossSection = halo_data_group["R12MeanCrossSection"][0, select]
-            self.R200cCrossSection = halo_data_group["R200cCrossSection"][0, select]
-            self.R200cMeanCrossSection = halo_data_group["R200cMeanCrossSection"][0, select]
+            #self.ReCrossSection = halo_data_group["ReCrossSection"][0, select]
+            #self.ReMeanCrossSection = halo_data_group["ReMeanCrossSection"][0, select]
+            #self.R12CrossSection = halo_data_group["R12CrossSection"][0, select]
+            #self.R12MeanCrossSection = halo_data_group["R12MeanCrossSection"][0, select]
+            #self.R200cCrossSection = halo_data_group["R200cCrossSection"][0, select]
+            #self.R200cMeanCrossSection = halo_data_group["R200cMeanCrossSection"][0, select]
 
 
             self.DynamicalRelaxation = halo_data_group["DynamicalRelaxation"][select]
@@ -66,8 +66,8 @@ class classhalo:
             self.Stars_Density_profile = profile_data_group["Stars_Density_profile"][sarg:,select]
             self.Stars_Velocity_dispersion = profile_data_group["Stars_Velocity_dispersion"][sarg:,select]
             self.Velocity_radial_bins = profile_data_group["Velocity_radial_bins"][:]
-            self.Projected_fDM = halo_data_group["GalaxyProjectedDarkMatterFraction"][:, select]
-            self.fDM = halo_data_group["GalaxyDarkMatterFraction"][:, select]
-            self.theo_fDM = halo_data_group["GalaxyTheoricalDarkMatterFraction"][:, select]
-            #self.fDM_cal= (profile_data_group["Dark_matter_Circular_Velocity"][:,select]/profile_data_group["Circular_Velocity"][:,select])**2
+            #self.Projected_fDM = halo_data_group["GalaxyProjectedDarkMatterFraction"][:, select]
+            #self.fDM = halo_data_group["GalaxyDarkMatterFraction"][:, select]
+            #self.theo_fDM = halo_data_group["GalaxyTheoricalDarkMatterFraction"][:, select]
+            self.fDM_cal= (profile_data_group["Dark_matter_Circular_Velocity"][:,select]/profile_data_group["Circular_Velocity"][:,select])**2
 
