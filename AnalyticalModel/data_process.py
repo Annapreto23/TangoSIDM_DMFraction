@@ -67,7 +67,7 @@ class classhalo:
             self.Stars_Velocity_dispersion = profile_data_group["Stars_Velocity_dispersion"][sarg:,select]
             self.Velocity_radial_bins = profile_data_group["Velocity_radial_bins"][:]
             #self.Projected_fDM = halo_data_group["GalaxyProjectedDarkMatterFraction"][:, select]
-            #self.fDM = halo_data_group["GalaxyDarkMatterFraction"][:, select]
+            self.fDM = halo_data_group["GalaxyDarkMatterFraction"][:, select]
             #self.theo_fDM = halo_data_group["GalaxyTheoricalDarkMatterFraction"][:, select]
-            self.fDM_cal= (profile_data_group["Dark_matter_Circular_Velocity"][:,select]/profile_data_group["Circular_Velocity"][:,select])**2
+            #self.fDM_cal= (profile_data_group["Dark_matter_Circular_Velocity"][:,select]/profile_data_group["Circular_Velocity"][:,select])**2
 

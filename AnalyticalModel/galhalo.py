@@ -11,10 +11,33 @@ import config as cfg
 import aux
 import profiles as pr
 import cosmo as co
-
+import warnings
 from lmfit import minimize, Parameters
 
 #########################################################################
+
+# --- Anna Preto's modification
+
+def safe_exp(b, x):
+    embx = np.zeros_like(x)
+    with warnings.catch_warnings(record=True) as w:
+        warnings.simplefilter("always", RuntimeWarning)
+        # Handle overflow warning
+        for i in range(len(x)):
+            try:
+                embx[i] = np.exp(-b * x[i])
+            except RuntimeWarning:
+                embx[i] = 0
+            else:
+                # Check if any warnings were raised
+                if len(w) > 0:
+                    for warning in w:
+                        if issubclass(warning.category, RuntimeWarning):
+                            embx[i] = 0
+
+    return embx
+
+# --- end of the modification
 
 #---galaxy-size-halo-structure relation   
 
@@ -359,7 +382,7 @@ def contra_Hernquist(r,h,d,A=0.85,w=0.8):
     Mi = h.M(rave)
     t0 = 1./(fdm + d.M(y0**w *rave)/Mi)
     t1 = 1./(fdm + d.M(rave)/Mi)
-    embx = np.exp(-b*x)
+    embx = safe_exp(b, x)
     y = t0*embx + t1*(1.-embx)
     rf = y*r
     return rf, fdm*h.M(r)
@@ -496,7 +519,7 @@ def contra(r,h,d,A=0.85,w=0.8):
     params.add('Mv', value=(1.-d.Mb/h.Mh)*h.Mh, vary=False)
     params.add('c', value=h.ch,min=1.,max=100.)
     params.add('a', value=1.,min=-2.,max=2.)
-    out = minimize(fobj_Dekel, params, args=(rf,Mdmf,h.Deltah,h.z)) 
+    out = minimize(fobj_Dekel, params, args=(rf,Mdmf,h.Deltah,h.z), nan_policy='omit') 
     MvD = out.params['Mv'].value
     cD = out.params['c'].value
     aD = out.params['a'].value

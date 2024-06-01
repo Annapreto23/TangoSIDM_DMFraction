@@ -39,7 +39,7 @@ class GalaxyCrossSectionCalculator:
         disk = pr.Hernquist(Mb, self.r0)
         # Prepare the contracted DM halo profile
         halo_contra = gh.contra(self.r_FullRange, halo_init, disk)[0]  # <<< adiabatically contracted CDM halo
-        return halo_init, halo_contra
+        return halo_init, halo_contra, disk
 
     def find_r1(self, halo_init, halo_contra):
         r1, dist = findr1(halo_contra.rho(self.r_FullRange), halo_init.rho(self.r_FullRange), self.r_FullRange)
@@ -73,7 +73,7 @@ class GalaxyCrossSectionCalculator:
         return sigma, true_sigma
 
     def run(self):
-        halo_init, halo_contra = self.compute_profiles()
+        halo_init, halo_contra, disk = self.compute_profiles()
         r1, dist = self.find_r1(halo_init, halo_contra)
         sigma, true_sigma = self.calculate_sigma(r1)
         return sigma, true_sigma, r1, dist

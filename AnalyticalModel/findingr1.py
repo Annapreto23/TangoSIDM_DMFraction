@@ -16,6 +16,9 @@ def dens(r, density, radius):
 
 mass = lambda r, density, radius: 4*np.pi*dens(r, density, radius)*r**2
 
+def calculate_mass(r, density, radius):
+    return fixed_quad(mass, 0, r, args=(density, radius))[0]
+
 def findr1(density1, density2, r):
     
     n = len(density1)
@@ -27,8 +30,8 @@ def findr1(density1, density2, r):
         deriv1 = calculate_derivative(density1[i:i+thresold], r[i:i+thresold])
         deriv2 = calculate_derivative(density2[i:i+thresold], r[i:i+thresold])
         dist = calculate_distance(deriv1, deriv2)
-        M1 = fixed_quad(mass, 0, r[i], args=(density1, r))[0]
-        M2 = fixed_quad(mass, 0, r[i], args=(density2, r))[0]
+        M1 = calculate_mass(r[i], density1, r)
+        M2 = calculate_mass(r[i], density2, r)
         #print("masses are ", M1/1e8, " and ",M2/1e8)
         distM = calculate_distance(M1, M2)
         #print("distM is ", distM)

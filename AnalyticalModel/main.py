@@ -8,29 +8,37 @@ import random
 #---user modules
 from sigma import GalaxyCrossSectionCalculator
 from data_process import classhalo
+from findingr1 import calculate_mass
 
 file_path = "../TangoSIDM_DMFraction/data/Simulation_datasets/TangoSIDM/Halo_data_L025N376ReferenceSigmaVelDep60Anisotropic.hdf5"
 type = 'disk'
 halo = classhalo(file_path, type)
 
-
-# --- plotting the cross section as a function of radius
-i = random.randint(0, len(halo.Mstar))
+i = random.randint(0, len(halo.Mstar)-1)
 #i = 10
 log_stellar_mass =  halo.Mstar[i]
 Reff = halo.GalaxyProjectedHalfLightRadius[i]
+calculator = GalaxyCrossSectionCalculator(file_path, i, type)
+sigma, true_sigma, r1, dist = calculator.run()
+gap_percentage = np.abs(true_sigma - sigma) / true_sigma * 100
+halo_init, halo_contra, disk = calculator.compute_profiles()
+radius = np.logspace(-3, 3, 200)
+halo_init = halo_init.rho(radius)
+halo_contra = halo_contra.rho(radius)
+disk = disk.rho(radius)
+
+# Printing the galaxy's propreties and model predictions
+
 print("Galaxy's index ", i)
 print(r"Galaxy's $log_{10}$ stellar mass [$M_\odot$] ", log_stellar_mass)
 print("Galaxy's effective radius Reff [kpc] ", Reff)
 
-calculator = GalaxyCrossSectionCalculator(file_path, i, type)
-sigma, true_sigma, r1, dist = calculator.run()
-gap_percentage = np.abs(true_sigma - sigma) / true_sigma * 100
-Reff = calculator.halo.GalaxyProjectedHalfLightRadius[i]
-
 print(f"The cross section following the semi-analytic model is {sigma:.2f} cm^2/g")
 print(f"The simulated galaxy's cross section (mean cross section at R1) is {true_sigma:.2f} cm^2/g")
 print(f"The difference represents {gap_percentage:.2f}% of the expected value.")
+
+
+# --- Plotting
 
 #Plot with subplots
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 15))
@@ -62,10 +70,6 @@ plt.show()
 
 
 plt.figure()
-halo_init, halo_contra = calculator.compute_profiles()
-radius = np.logspace(np.log(min(calculator.halo.Density_radial_bins)), 3, 200)
-halo_init = halo_init.rho(radius)
-halo_contra = halo_contra.rho(radius)
 plt.plot(calculator.halo.Density_radial_bins, calculator.halo.Dark_matter_Density_profile[:, i])
 plt.plot(radius, halo_contra, label = r'$\rho_{\mathrm{contracted halo}}$')
 plt.plot(radius, halo_init, label = r'$\rho_{NFW}$')
@@ -77,6 +81,7 @@ plt.yscale('log')
 plt.xscale('log')
 plt.title(f'Galaxy Index: {i}, $log_{{10}}$ Stellar Mass: {log_stellar_mass:.2f}, Effective Radius: {Reff:.2f} kpc')
 plt.legend()
+plt.show()
 
 
 
