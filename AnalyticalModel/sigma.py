@@ -27,7 +27,9 @@ class GalaxyCrossSectionCalculator:
         self.lgMv = self.halo.M200c[i]  # [M_sun]
         self.c = self.halo.c200c[i]
         self.lgMb = self.halo.Mstar[i]  # [M_sun]
-        self.r0 = self.halo.GalaxyHalfLightRadius[i] / (1 + np.sqrt(2))  # [kpc]
+        self.Reff = self.halo.GalaxyHalfLightRadius[i]
+        self.r0 = self.Reff / (1 + np.sqrt(2))  # [kpc]
+        self.fDM = np.interp(self.Reff, self.halo.AxisRadius, self.halo.fDM[:,i])
 
     def compute_profiles(self):
         Mv = 10. ** self.lgMv
@@ -41,40 +43,48 @@ class GalaxyCrossSectionCalculator:
         halo_contra = gh.contra(self.r_FullRange, halo_init, disk)[0]  # <<< adiabatically contracted CDM halo
         return halo_init, halo_contra, disk
 
-    def find_r1(self, halo_init, halo_contra):
-        r1, dist = findr1(halo_contra.rho(self.r_FullRange), halo_init.rho(self.r_FullRange), self.r_FullRange)
-        return r1, dist
+    def find_r1(self, halo_contra, disk, fDM, Reff):
+        r1, rho_iso, r = findr1(halo_contra, disk, fDM, self.r_FullRange, Reff)
+        return r1, rho_iso, r
 
-    def calculate_sigma(self, r1):
+    def calculate_sigma(self, r1, rho, r):
         kpctocm = 3.086e16 * 1e5
         kmtocm = 1e5
 
         # Velocity dispersion
-        vel_disp = np.interp(r1, self.halo.AxisRadius, self.halo.Dark_matter_Velocity_dispersion[:-9, self.i])  # km/s
+        vel_disp = np.interp(r1, self.halo.AxisRadius, self.halo.Dark_matter_Velocity_dispersion[9:, self.i])  # km/s
         vel_disp *= kmtocm  # cm/s
 
         # Galaxy's age
-        tage = 10 * 1e9  # years
+        tage = 10 * 1e9 # years
         tage *= 60 * 60 * 24 * 365  # seconds
 
         # Density at r1 using halo.contra
-        rhor1 = np.interp(r1, self.halo.Density_radial_bins, self.halo.Dark_matter_Density_profile[:,self.i])
-        rho = rhor1
+        rho = np.interp(r1, r, rho)
         rho *= 2e30 * 1e3  # g/kpc^3
         rho /= kpctocm ** 3  # g/cm^3
+        
 
         # Function to compute the cross section
         def sigm(rho, vel, tage):
-            return np.sqrt(np.pi) / (rho * vel * 4 * tage)
+            return np.sqrt(np.pi) / (rho  * vel * 4 * tage)
 
         sigma = sigm(rho, vel_disp, tage)
-        true_sigma = np.interp(r1, self.halo.AxisRadius[:-1], self.halo.MeanCrossSection[:, self.i])
+        true_sigma = np.interp(r1, self.halo.AxisRadius[:-1], self.halo.CrossSection[:, self.i])
+        #true_sigma = self.halo.ReCrossSection[self.i]
+        #print("cs Re median",self.halo.ReCrossSection[self.i])
+        #print("cs Re moyenne",self.halo.ReMeanCrossSection[self.i])
+        #print("cs R12 median",self.halo.R12CrossSection[self.i])
+        #print("cs R12 moyenne",self.halo.R12MeanCrossSection[self.i])
+        #print("cs R200 median",self.halo.R200cCrossSection[self.i])
+        #print("cs Re moy",self.halo.R200cMeanCrossSection[self.i])
+
 
         return sigma, true_sigma
 
     def run(self):
         halo_init, halo_contra, disk = self.compute_profiles()
-        r1, dist = self.find_r1(halo_init, halo_contra)
-        sigma, true_sigma = self.calculate_sigma(r1)
-        return sigma, true_sigma, r1, dist
+        r1, rho_iso, r = self.find_r1(halo_contra, disk, self.fDM, self.Reff)
+        sigma, true_sigma = self.calculate_sigma(r1, rho_iso, r)
+        return sigma, true_sigma, r1, rho_iso, r
 

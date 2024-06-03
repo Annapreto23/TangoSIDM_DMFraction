@@ -11,9 +11,17 @@ from sigma import GalaxyCrossSectionCalculator
 from data_process import classhalo
 from findingr1 import calculate_mass
 
-file_path = "../TangoSIDM_DMFraction/data/Simulation_datasets/TangoSIDM/Halo_data_L025N376ReferenceSigmaVelDep30Anisotropic.hdf5"
+file_path = "../TangoSIDM_DMFraction/data/Simulation_datasets/TangoSIDM/Halo_data_L025N376ReferenceSigmaConstant00.hdf5"
 type = 'all'
 halo = classhalo(file_path, type)
+
+
+tage = 10.  # [Gyr]
+sigmamx = 0.5  # [cm^2/g]
+lgMv = np.log10(2e12)  # [M_sun]
+c = 9.7
+lgMb = np.log10(6.2e10)  # [M_sun]
+r0 = 3.  # [kpc]
 
 def process_all_galaxies(halo, file_path, type):
     Ms = []
@@ -40,7 +48,7 @@ def process_all_galaxies(halo, file_path, type):
 
         # Calculate the masses within the effective radius Reff
         Ms_val = calculate_mass(Reff, disk, radius)
-        Mdm_val = calculate_mass(Reff, halo_contra, radius)
+        Mdm_val = calculate_mass(Reff, halo_init, radius)
 
         # Calculate the dark matter fraction (fDM)
         fDM_val = Mdm_val / (Mdm_val + Ms_val)

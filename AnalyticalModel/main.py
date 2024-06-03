@@ -19,7 +19,8 @@ i = random.randint(0, len(halo.Mstar)-1)
 log_stellar_mass =  halo.Mstar[i]
 Reff = halo.GalaxyProjectedHalfLightRadius[i]
 calculator = GalaxyCrossSectionCalculator(file_path, i, type)
-sigma, true_sigma, r1, dist = calculator.run()
+sigma, true_sigma, r1, rho_iso, r_iso = calculator.run()
+print(f"r1 found is : {r1:.2f}")
 gap_percentage = np.abs(true_sigma - sigma) / true_sigma * 100
 halo_init, halo_contra, disk = calculator.compute_profiles()
 radius = np.logspace(-3, 3, 200)
@@ -55,7 +56,7 @@ ax1.legend()
 ax1.set_title(f'Galaxy Index: {i}, $log_{{10}}$ Stellar Mass: {halo.Mstar[i]:.2f}, Effective Radius: {Reff:.2f} kpc')
 
 # Plot mean cross section
-ax2.plot(calculator.halo.AxisRadius[:-1], calculator.halo.MeanCrossSection[:, i])
+ax2.plot(calculator.halo.AxisRadius[:-1], calculator.halo.CrossSection[:, i])
 ax2.axvline(x=r1, color='r', linestyle='--', label=f"r1 = {r1:.2f} kpc")
 ax2.axvline(x=Reff, color='b', linestyle='--', label=f"Reff = {Reff:.2f} kpc")
 ax2.axhline(sigma, color='r', linestyle='-', label="cross section within the semi-analytical model")
@@ -66,13 +67,13 @@ ax2.legend()
 ax2.set_title(f'Galaxy Index: {i}, $log_{{10}}$ Stellar Mass: {halo.Mstar[i]:.2f}, Effective Radius: {Reff:.2f} kpc')
 
 plt.tight_layout()
-plt.show()
+#plt.show()
 
 
 plt.figure()
 plt.plot(calculator.halo.Density_radial_bins, calculator.halo.Dark_matter_Density_profile[:, i])
 plt.plot(radius, halo_contra, label = r'$\rho_{\mathrm{contracted halo}}$')
-plt.plot(radius, halo_init, label = r'$\rho_{NFW}$')
+plt.plot(r_iso, rho_iso, label = r'$\rho_{iso}$')
 plt.axvline(x=r1, color='r', linestyle='--', label=f"r1 = {r1:.2f} kpc")
 plt.axvline(x=Reff, color='b', linestyle='--', label=f"Reff = {Reff:.2f} kpc")
 plt.xlabel('radius [kpc]')
@@ -82,67 +83,5 @@ plt.xscale('log')
 plt.title(f'Galaxy Index: {i}, $log_{{10}}$ Stellar Mass: {log_stellar_mass:.2f}, Effective Radius: {Reff:.2f} kpc')
 plt.legend()
 plt.show()
-
-
-
-
-y_true = []
-y_pred = []
-error = []
-
-
-for i in range(0, len(halo.Mstar)):
-    calculator = GalaxyCrossSectionCalculator(file_path, i, type)
-    sigma, true_sigma, r1, dist = calculator.run()
-    gap_percentage = (true_sigma - sigma) / true_sigma * 100
-    
-
-    y_true.append(true_sigma)
-    y_pred.append(sigma)
-    error.append(gap_percentage)
-   
-
-
-
-    #print(f"The cross section following the semi-analytic model is {sigma:.2f} cm^2/g")
-    #print(f"The simulated galaxy's cross section (mean cross section at Reff) is {true_sigma:.2f} cm^2/g")
-    #print(f"The difference represents {gap_percentage:.2f}% of the expected value.")
-
-
-y_true = np.array(y_true)
-y_pred = np.array(y_pred)
-
-plt.figure()
-plt.plot(y_true, 'o')
-plt.plot(y_pred, 'x')
-plt.ylabel('sigma')
-plt.xlabel('Galaxy Index')
-plt.yscale('log')
-plt.yticks([0,10], ['0','10'])
-plt.ylim(0,10)
-plt.grid()
-#plt.show()
-
-
-plt.figure()
-plt.scatter(y_true, y_pred/y_true)
-plt.xlabel('y_true')
-plt.ylabel('y_pred/y_true')
-plt.yscale('log')
-plt.grid()
-#plt.show()
-
-
-plt.figure()
-plt.plot(error, 'o')
-plt.xlabel('Galaxy Index')
-plt.ylabel('Error [%]')
-plt.yscale('log')
-plt.grid()
-#plt.show()
-
-
-
-
 
 

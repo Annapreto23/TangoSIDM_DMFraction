@@ -382,7 +382,7 @@ def contra_Hernquist(r,h,d,A=0.85,w=0.8):
     Mi = h.M(rave)
     t0 = 1./(fdm + d.M(y0**w *rave)/Mi)
     t1 = 1./(fdm + d.M(rave)/Mi)
-    embx = safe_exp(b, x)
+    embx = np.exp(-2.*x)
     y = t0*embx + t1*(1.-embx)
     rf = y*r
     return rf, fdm*h.M(r)

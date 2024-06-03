@@ -22,15 +22,15 @@ class classhalo:
 
             # Halo_data attributes
             self.AxisRadius = halo_data_group["AxisRadius"][:]
-            #self.CrossSection = halo_data_group["CrossSection"][:, select]
+            self.CrossSection = halo_data_group["CrossSection"][:, select]
             self.MeanCrossSection = halo_data_group["MeanCrossSection"][:, select]
             
-            #self.ReCrossSection = halo_data_group["ReCrossSection"][0, select]
-            #self.ReMeanCrossSection = halo_data_group["ReMeanCrossSection"][0, select]
-            #self.R12CrossSection = halo_data_group["R12CrossSection"][0, select]
-            #self.R12MeanCrossSection = halo_data_group["R12MeanCrossSection"][0, select]
-            #self.R200cCrossSection = halo_data_group["R200cCrossSection"][0, select]
-            #self.R200cMeanCrossSection = halo_data_group["R200cMeanCrossSection"][0, select]
+            self.ReCrossSection = halo_data_group["ReCrossSection"][0, select]
+            self.ReMeanCrossSection = halo_data_group["ReMeanCrossSection"][0, select]
+            self.R12CrossSection = halo_data_group["R12CrossSection"][0, select]
+            self.R12MeanCrossSection = halo_data_group["R12MeanCrossSection"][0, select]
+            self.R200cCrossSection = halo_data_group["R200cCrossSection"][0, select]
+            self.R200cMeanCrossSection = halo_data_group["R200cMeanCrossSection"][0, select]
 
 
             self.DynamicalRelaxation = halo_data_group["DynamicalRelaxation"][select]
