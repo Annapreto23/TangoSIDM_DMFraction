@@ -43,7 +43,7 @@ params = {
     'sigmamx': 0.5, # [cm^2/g]
     'lgMv': np.log10(2e12), # [M_sun]
     'c': 9.7,
-    'lgMb': np.log10(1e11), # [M_sun]
+    'lgMb': np.log10(1e9), # [M_sun]
     'Reff': 1. # [kpc]
 }
 
@@ -100,7 +100,7 @@ def plot_fDM(quantities, varying_params, params):
     
     # Loop over any additional quantities (if provided)
     for i, secondary_values in enumerate(quantities[1:], start=1):
-        for secondary_val in secondary_values:
+        for k, secondary_val in enumerate(secondary_values):
             fDM_values = []
             if secondary_val is not None:
                 params[varying_params[i]] = secondary_val  # Set secondary variable
@@ -111,7 +111,9 @@ def plot_fDM(quantities, varying_params, params):
             
             # Label for the secondary variable
             label = f'{param_var[varying_params[i]]}={secondary_val:.2f}{param_units[varying_params[i]]}' if secondary_val is not None else None
-            plt.plot(primary_values, fDM_values, marker='o', linestyle='-', label=label)
+            cmap = plt.get_cmap('viridis')
+            colors = cmap(np.linspace(0, 1, len(secondary_values)))
+            plt.plot(primary_values, fDM_values, marker='o', linestyle='-', label=label, color = colors[k])
     
     # Generate title excluding the varying parameters
     title_parts = [f'{param_var[key]}={value:.2f} {param_units[key]}' for key, value in params.items() if key not in varying_params]
@@ -129,7 +131,7 @@ def plot_fDM(quantities, varying_params, params):
 quantity1 = np.linspace(0.2, 15, 10)  
 
 # -- quantity of the different lines
-quantity2 = np.linspace(0, 30, 5)
+quantity2 = np.arange(0, 20, 2)
 
 # -- quantities to plot 
 quantities = [quantity1, quantity2]
