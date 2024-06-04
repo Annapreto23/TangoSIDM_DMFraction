@@ -10,23 +10,50 @@ import numpy as np
 # --for plot
 import matplotlib.pyplot as plt
 
+params = {
+    "font.size": 20,
+    "font.family": "Arial Black",
+    "text.usetex": True,
+    "mathtext.fontset": "custom",
+    "figure.figsize": (4, 3),
+    "figure.subplot.left": 0.15,
+    "figure.subplot.right": 0.95,
+    "figure.subplot.bottom": 0.16,
+    "figure.subplot.top": 0.95,
+    "figure.subplot.wspace": 0.3,
+    "figure.subplot.hspace": 0.3,
+    "lines.markersize": 2,
+    "lines.linewidth": 1.5,
+}
+plt.rcParams.update(params)
+
 # -- parameters to explore
+
+param_var = {
+    'tage': r't_{age}', # [Gyr]
+    'sigmamx': r'$\sigma$/$m_x$', # [cm^2/g]
+    'lgMv': r'$\log_{10}\frac{M_{200\mathrm{c}}}{\mathrm{M}_{\odot}}$', # [M_sun]
+    'c': r'$c_{200\mathrm{c}}$',
+    'lgMb':r'$\log_{10}\frac{M_{\mathrm{baryons}}}{\mathrm{M}_{\odot}}$', # [M_sun],
+    'Reff':r'$R_{eff}$' # [kpc]
+}
+
 params = {
     'tage': 10., # [Gyr]
     'sigmamx': 0.5, # [cm^2/g]
     'lgMv': np.log10(2e12), # [M_sun]
     'c': 9.7,
-    'lgMb': np.log10(6.2e10), # [M_sun]
-    'Reff': 3. # [kpc]
+    'lgMb': np.log10(1e11), # [M_sun]
+    'Reff': 1. # [kpc]
 }
 
-param_labels = {
-    'tage': r'tage $[Gyr]$',
-    'sigmamx': r'$\sigma$/$m_x$ $[cm^2/g]$',
-    'lgMv': r'lgMv $[M_\odot]$',
-    'c': r'c',
-    'lgMb': r'lgMb $[M_\odot]$',
-    'Reff': r'Reff $[kpc]$'
+param_units = {
+    'tage': r' [Gyr]',
+    'sigmamx': r' $\mathrm{cm}^{2}\mathrm{g}^{-1}$',
+    'lgMv': r'',
+    'c': r'',
+    'lgMb': r'',
+    'Reff': r' [kpc]'
 }
 
 r_FullRange = np.logspace(-3, 3, 200) # [kpc] for plotting the full profile
@@ -69,7 +96,7 @@ def plot_fDM(quantities, varying_params, params):
     primary_var = varying_params[0]  # Primary variable to vary
     primary_values = quantities[0]   # Values for the primary variable
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 6), dpi = 200)
     
     # Loop over any additional quantities (if provided)
     for i, secondary_values in enumerate(quantities[1:], start=1):
@@ -83,15 +110,15 @@ def plot_fDM(quantities, varying_params, params):
                 fDM_values.append(fDM)
             
             # Label for the secondary variable
-            label = f'{param_labels[varying_params[i]]}={secondary_val:.2f}' if secondary_val is not None else None
+            label = f'{param_var[varying_params[i]]}={secondary_val:.2f}{param_units[varying_params[i]]}' if secondary_val is not None else None
             plt.plot(primary_values, fDM_values, marker='o', linestyle='-', label=label)
     
     # Generate title excluding the varying parameters
-    title_parts = [f'{key}={value:.2f} {param_labels[key]}' for key, value in params.items() if key not in varying_params]
+    title_parts = [f'{param_var[key]}={value:.2f} {param_units[key]}' for key, value in params.items() if key not in varying_params]
     title = ', '.join(title_parts)
     
-    plt.xlabel(param_labels[primary_var])
-    plt.ylabel(r'$f_{DM}$')
+    plt.xlabel(param_var[primary_var]+param_units[primary_var])
+    plt.ylabel(r'$f_{\mathrm{DM}}$')
     plt.title(title)
     plt.legend()
     plt.grid(True)
@@ -99,16 +126,16 @@ def plot_fDM(quantities, varying_params, params):
 
 
 # -- quantity on the xaxis
-quantity1 =  np.linspace(8, 12, 10) 
+quantity1 = np.linspace(0.2, 15, 10)  
 
 # -- quantity of the different lines
-quantity2 = np.linspace(8.5, 11.5, 5)
+quantity2 = np.linspace(0, 30, 5)
 
 # -- quantities to plot 
 quantities = [quantity1, quantity2]
 
-# -- name of the quantities to plot
-varying_params = ['c','lgMb']    
+# -- name of the quantities to plot ('tage','sigmamx','lgMv', 'c', 'lgMb', 'Reff')
+varying_params = ['Reff', 'sigmamx']    
 
 # -- plot
 plot_fDM(quantities, varying_params, params)
