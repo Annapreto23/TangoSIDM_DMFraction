@@ -16,19 +16,21 @@ def findr1(halo_contra, disk, fDM, r, Reff):
     gap = np.inf
     rho_iso_r1 = 0
     r1 = 0
-    for i in np.logspace(-1,3, 200):
+    for i in np.logspace(-1,3, 50):
        rhodm0,sigma0,rho_iso,Vc,radius = pr.stitchSIDMcore(i,halo_contra,disk)
        rho_iso = np.concatenate((rho_iso, halo_contra.rho(np.arange(radius[-1], r[-1]))[1:]))
        radius = np.concatenate((radius, np.arange(radius[-1], r[-1])[1:]))
        Mdm = calculate_mass(Reff, rho_iso, radius)
        Ms = calculate_mass(Reff, disk.rho(r), r)
        f = Mdm/(Ms+Mdm)
-       #print("f is :",f, fDM, gap)
+
        if abs(f-fDM) < gap:
            r1 = i
            rho_iso_r1 = rho_iso
            radius_r1 = radius
            gap = abs(f-fDM)
+           final_f = f
+           vel_disp = sigma0
 
-    return r1, rho_iso_r1, radius_r1
+    return r1, rho_iso_r1, radius_r1, gap, final_f, vel_disp
 

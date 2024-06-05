@@ -1458,6 +1458,8 @@ class Dekel(object):
         X = self.X(x)
         Vvsqr = self.Vcirc(self.rh)**2.
         u = 4*(1.-self.alphah)
+        if u == 0:
+            u = 1e-5
         sigmasqr = 2.*Vvsqr*self.ch/self.g(self.ch) \
             *(x**3.5)/(X**(2.*(3.5-self.alphah))) \
             * ( (1.-X**u)/u - 8.*(1.-X**(u+1.))/(u+1.) \
@@ -1465,7 +1467,7 @@ class Dekel(object):
             + 70.*(1.-X**(u+4.))/(u+4.) - 56.*(1.-X**(u+5.))/(u+5.) \
             + 28.*(1.-X**(u+6.))/(u+6.) - 8.*(1.-X**(u+7.))/(u+7.) \
             + (1.-X**(u+8.))/(u+8.) )
-        return np.sqrt(sigmasqr)  
+        return np.sqrt(abs(sigmasqr))
         
 class Einasto(object):
     """

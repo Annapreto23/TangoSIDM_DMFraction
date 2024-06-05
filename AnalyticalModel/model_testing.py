@@ -1,3 +1,6 @@
+# File to test the different dependencies of the semi-analytic model
+
+
 ######################## set up the environment #########################
 
 import profiles as pr
@@ -35,7 +38,8 @@ param_var = {
     'lgMv': r'$\log_{10}\frac{M_{200\mathrm{c}}}{\mathrm{M}_{\odot}}$', # [M_sun]
     'c': r'$c_{200\mathrm{c}}$',
     'lgMb':r'$\log_{10}\frac{M_{\mathrm{baryons}}}{\mathrm{M}_{\odot}}$', # [M_sun],
-    'Reff':r'$R_{eff}$' # [kpc]
+    'Reff':r'$R_{eff}$', # [kpc]
+     'Pot' : r'G' #m2/s2
 }
 
 params = {
@@ -43,30 +47,43 @@ params = {
     'sigmamx': 0.5, # [cm^2/g]
     'lgMv': np.log10(2e12), # [M_sun]
     'c': 9.7,
-    'lgMb': np.log10(1e9), # [M_sun]
-    'Reff': 1. # [kpc]
+    'lgMb': np.log10(1e10), # [M_sun]
+    'Reff': 3., # [kpc]
+    'Pot':None #m2/s2
 }
 
 param_units = {
     'tage': r' [Gyr]',
-    'sigmamx': r' $\mathrm{cm}^{2}\mathrm{g}^{-1}$',
+    'sigmamx': r' [$\mathrm{cm}^{2}\mathrm{g}^{-1}$]',
     'lgMv': r'',
     'c': r'',
     'lgMb': r'',
-    'Reff': r' [kpc]'
+    'Reff': r' [kpc]',
+    'Pot': r' [$\mathrm{m}^{2}\mathrm{s}^{-2}$]'
 }
 
 r_FullRange = np.logspace(-3, 3, 200) # [kpc] for plotting the full profile
 
+G = 6.67e-11
+mtokpc = 3.241e-20
+potential = G*10**10*2e30/(15/mtokpc)
 
-def computation(params):
+def computation(params, fixed_pot):
     # Extract parameters
-    tage, sigmamx, lgMv, lgMb, c, Reff = params.values()
-    r0 = Reff / (1 + np.sqrt(2))
+    tage, sigmamx, lgMv, lgMb, c, Reff, Pot = params.values()
+    
 
     # Initialize with baryons
     Mv = 10.**lgMv
     Mb = 10.**lgMb
+
+    if Pot is not None:
+        Reff = return_R(Mb, Pot)
+    if Pot is None and fixed_pot == True:
+        Reff = return_R(Mb, potential)
+        
+
+    r0 = Reff / (1 + np.sqrt(2))
     halo_init = pr.NFW(Mv, c, Delta=100., z=0.)
     disk = pr.Hernquist(Mb, r0)
     halo_contra = gh.contra(r_FullRange, halo_init, disk)[0] # Adiabatically contracted CDM halo
@@ -81,9 +98,9 @@ def computation(params):
 
     return disk.rho(radius), rho, radius
 
-def calculate_fDM(params):
+def calculate_fDM(params, fixed_pot):
     # Compute densities
-    rho_disk, rho, r = computation(params)
+    rho_disk, rho, r = computation(params, fixed_pot)
 
     # Calculate masses
     Mdm = calculate_mass(params['Reff'], rho, r)
@@ -92,7 +109,7 @@ def calculate_fDM(params):
 
     return fDM
 
-def plot_fDM(quantities, varying_params, params):
+def plot_fDM(quantities, varying_params, params, fixed_pot = False):
     primary_var = varying_params[0]  # Primary variable to vary
     primary_values = quantities[0]   # Values for the primary variable
 
@@ -104,9 +121,10 @@ def plot_fDM(quantities, varying_params, params):
             fDM_values = []
             if secondary_val is not None:
                 params[varying_params[i]] = secondary_val  # Set secondary variable
+
             for x in primary_values:
                 params[primary_var] = x  # Set primary variable
-                fDM = calculate_fDM(params)
+                fDM = calculate_fDM(params, fixed_pot)
                 fDM_values.append(fDM)
             
             # Label for the secondary variable
@@ -116,28 +134,58 @@ def plot_fDM(quantities, varying_params, params):
             plt.plot(primary_values, fDM_values, marker='o', linestyle='-', label=label, color = colors[k])
     
     # Generate title excluding the varying parameters
-    title_parts = [f'{param_var[key]}={value:.2f} {param_units[key]}' for key, value in params.items() if key not in varying_params]
+
+    title_parts = [f'{param_var[key]}={value:.2f} {param_units[key]}' for key, value in params.items() if key not in varying_params and key != 'Pot']
+    if fixed_pot == True :
+        title_parts = [f'{param_var[key]}={value:.2f} {param_units[key]}' for key, value in params.items() if key not in varying_params and key != 'Pot' and (key != 'Reff' and fixed_pot == True)]
     title = ', '.join(title_parts)
+    if fixed_pot == True:
+        title = title + f', G = 10**{np.log10(potential):.2f} '+ param_units['Pot']
+
     
     plt.xlabel(param_var[primary_var]+param_units[primary_var])
     plt.ylabel(r'$f_{\mathrm{DM}}$')
     plt.title(title)
-    plt.legend()
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     plt.grid(True)
     plt.show()
 
 
-# -- quantity on the xaxis
-quantity1 = np.linspace(0.2, 15, 10)  
+
+def return_R(M, pot):
+    M = M*2e30
+    R = (G*M/pot)*mtokpc
+    return R
+
+def return_pot():
+    M = (10**params['lgMb'])*2e30
+    R = np.array([0.5, 15])/mtokpc
+    pot = G*M/R
+    return np.log10(pot)
+
+# -- quantity on the x axis
+quantity1 = np.linspace(9, 11.5, 10)
 
 # -- quantity of the different lines
-quantity2 = np.arange(0, 20, 2)
+quantity2 = np.linspace(0, 20, 10)
+  
+
+# -- name of the quantities to plot ('tage','sigmamx','lgMv', 'c', 'lgMb', 'Reff')
+varying_params = ['lgMb', 'sigmamx']  
+
+
+# Uncomment the following three lines and add 'fixed_pot = True' in the call to the plot_fDM function
+# to plot fDM as a function of the gravitational potential
+
+#maxi, mini = return_pot()
+#quantity1 = np.logspace(mini,maxi,10)
+#varying_params = ['Pot', 'sigmamx'] 
 
 # -- quantities to plot 
 quantities = [quantity1, quantity2]
 
-# -- name of the quantities to plot ('tage','sigmamx','lgMv', 'c', 'lgMb', 'Reff')
-varying_params = ['Reff', 'sigmamx']    
+  
+
 
 # -- plot
-plot_fDM(quantities, varying_params, params)
+plot_fDM(quantities, varying_params, params, fixed_pot = False)

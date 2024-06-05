@@ -44,15 +44,14 @@ class GalaxyCrossSectionCalculator:
         return halo_init, halo_contra, disk
 
     def find_r1(self, halo_contra, disk, fDM, Reff):
-        r1, rho_iso, r = findr1(halo_contra, disk, fDM, self.r_FullRange, Reff)
-        return r1, rho_iso, r
+        r1, rho_iso, r, gap, fDM, vel_disp = findr1(halo_contra, disk, fDM, self.r_FullRange, Reff)
+        return r1, rho_iso, r, gap, fDM, vel_disp
 
-    def calculate_sigma(self, r1, rho, r):
+    def calculate_sigma(self, r1, rho, r, vel_disp):
         kpctocm = 3.086e16 * 1e5
         kmtocm = 1e5
 
         # Velocity dispersion
-        vel_disp = np.interp(r1, self.halo.AxisRadius, self.halo.Dark_matter_Velocity_dispersion[9:, self.i])  # km/s
         vel_disp *= kmtocm  # cm/s
 
         # Galaxy's age
@@ -71,20 +70,11 @@ class GalaxyCrossSectionCalculator:
 
         sigma = sigm(rho, vel_disp, tage)
         true_sigma = np.interp(r1, self.halo.AxisRadius[:-1], self.halo.CrossSection[:, self.i])
-        #true_sigma = self.halo.ReCrossSection[self.i]
-        #print("cs Re median",self.halo.ReCrossSection[self.i])
-        #print("cs Re moyenne",self.halo.ReMeanCrossSection[self.i])
-        #print("cs R12 median",self.halo.R12CrossSection[self.i])
-        #print("cs R12 moyenne",self.halo.R12MeanCrossSection[self.i])
-        #print("cs R200 median",self.halo.R200cCrossSection[self.i])
-        #print("cs Re moy",self.halo.R200cMeanCrossSection[self.i])
-
-
         return sigma, true_sigma
 
     def run(self):
         halo_init, halo_contra, disk = self.compute_profiles()
-        r1, rho_iso, r = self.find_r1(halo_contra, disk, self.fDM, self.Reff)
-        sigma, true_sigma = self.calculate_sigma(r1, rho_iso, r)
-        return sigma, true_sigma, r1, rho_iso, r
+        r1, rho_iso, r, gap, fDM, vel_disp = self.find_r1(halo_contra, disk, self.fDM, self.Reff)
+        sigma, true_sigma = self.calculate_sigma(r1, rho_iso, r, vel_disp)
+        return sigma, true_sigma, r1, rho_iso, r, gap, fDM
 
