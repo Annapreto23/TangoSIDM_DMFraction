@@ -55,7 +55,7 @@ class GalaxyCrossSectionCalculator:
         # Prepare the CDM profile
         c = self.calculate_c()
         print(f"c vs c_sim : {c:.2f} {self.c:.2f} {self.lgMv:.2f}")
-        halo_init = pr.NFW(Mv, c, Delta=100., z=0.)
+        halo_init = pr.NFW(Mv, self.c, Delta=100., z=0.)
         # Prepare the baryonic profile
         disk = pr.Hernquist(Mb, self.r0)
         # Prepare the contracted DM halo profile
