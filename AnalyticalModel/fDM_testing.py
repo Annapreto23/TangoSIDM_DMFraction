@@ -22,7 +22,7 @@ params = {
     "font.family": "Arial Black",
     "text.usetex": True,
     "mathtext.fontset": "custom",
-    "figure.figsize": (4, 3),
+    "figure.figsize": (5, 6),
     "figure.subplot.left": 0.15,
     "figure.subplot.right": 0.95,
     "figure.subplot.bottom": 0.16,
@@ -104,11 +104,11 @@ def plot_fDM_vs_Mb_tot(fdm, fdm_sim, Mb_tot, Mb_tot_sim, ax):
     })
     y = np.linspace(-1, 2, 20)
     x = y
-    ax.plot(x, y, linestyle = '--', label='x = y', linewidth= 1)
+    ax.plot(x, y, linestyle = '--', label='x = y', linewidth= 2)
 
     # Plot using seaborn
     #sns.scatterplot(data=df, x='fDM_sim', y='fDM', ax=ax)
-    sns.regplot(data=df, x='fDM_sim', y='fDM', ax=ax, ci = None, scatter=True, color='red', scatter_kws={'linewidths':0.8,'edgecolor':'white'}, line_kws={'linewidth':1}, label ='linear regression')
+    sns.regplot(data=df, x='fDM_sim', y='fDM', ax=ax, ci = None, scatter=True, color='red', scatter_kws={'linewidths':0.1,'edgecolor':'white'}, line_kws={'linewidth':2}, label ='linear regression')
 
     ax.set_xlabel(r'$f_{\mathrm{DM, sim}}$')
     ax.set_ylabel(r'$f_{\mathrm{DM}}$')
@@ -134,13 +134,14 @@ if __name__ == "__main__":
     ncols = 3
     nrows = math.ceil(num_files / ncols)  # Calculate the number of rows needed
 
-    fig, axes = plt.subplots(nrows, ncols, figsize=(15, 8 * nrows), dpi=400)
+    fig, axes = plt.subplots(nrows, ncols)
 
     for i, file in enumerate(file_paths):
         row = i // ncols
         col = i % ncols
+        ax = axes[row, col]
         compute_and_plot(file, ax=axes[row, col])
-        axes[row, col].set_title(file_names[i])  # Set the title to the filename
+        ax.set_title(file_names[i])  # Set the title to the filename
 
     # Hide any unused subplots
     for i in range(num_files, nrows * ncols):
@@ -148,13 +149,15 @@ if __name__ == "__main__":
         col = i % ncols
         fig.delaxes(axes[row, col])
 
-    plt.tight_layout(pad = 20)
-    fig.subplots_adjust(hspace=0.5)
-    handles, labels = axes[0, 0].get_legend_handles_labels()
-    fig.legend(handles, labels, loc='center', ncol=3)    
-    fig.savefig("./AnalyticalModel/plots/model_testing.pdf")
-    fig.savefig("./AnalyticalModel/plots/model_testing.png")
+    
+    fig.subplots_adjust(hspace=0.5, wspace=0.4, top=0.90)
+    handles = [plt.Line2D([], [], color='red', label='linear regression'),
+           plt.Line2D([], [], color='blue', linestyle='--', label='x = y')]
+
+    fig.legend(handles, ['Linear regression', 'x = y'], loc='upper center', ncol=2, borderaxespad=0.1, framealpha=0)
+    plt.tight_layout(pad = 30)
     plt.show()
+
 
 
 

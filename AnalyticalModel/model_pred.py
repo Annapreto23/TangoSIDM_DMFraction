@@ -69,7 +69,7 @@ class Predictions:
 
         self.df = pd.DataFrame(data)
         self.df.to_csv(self.df_file_path, index=False)
-        print("DataFrame saved to file:")
+        print("DataFrame saved to file")
 
     def calculate_errors(self, y_pred, y_true):
         Ms, Mdm, fdm, fdm_sim, Mb_tot, Mb_tot_sim = process_all_galaxies(self.halo, self.file_path, self.halo_type)
@@ -82,6 +82,7 @@ class Predictions:
             return
 
         y_true = self.df['y_true'].values
+        y_true = self.halo.ReCrossSection
         y_pred = self.df['y_pred'].values
         error = self.df['error'].values
 
@@ -100,8 +101,9 @@ class Predictions:
         g.ax_joint.set_ylim(-3, 40)
         g.ax_joint.set_xlabel(r'$(\sigma$/$m_x)_\mathrm{sim}$ [$\mathrm{cm}^{2}\mathrm{g}^{-1}$]')
         g.ax_joint.set_ylabel(r'$\sigma$/$m_x$ [$\mathrm{cm}^{2}\mathrm{g}^{-1}$]')
+        g.fig.suptitle("Reference SigmaVel60 with c from the simulation", fontsize=15)
         g.ax_joint.legend()
         g.ax_joint.grid(True)
-
+        plt.tight_layout()
         plt.show()
 

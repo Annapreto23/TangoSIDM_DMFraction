@@ -30,13 +30,32 @@ class GalaxyCrossSectionCalculator:
         self.Reff = self.halo.GalaxyHalfLightRadius[i]
         self.r0 = self.Reff / (1 + np.sqrt(2))  # [kpc]
         self.fDM = np.interp(self.Reff, self.halo.AxisRadius, self.halo.fDM[:,i])
+    
+    import numpy as np
 
+    def calculate_c(self, z=0):
+
+        # Calculate alpha, beta, gamma
+        alpha = 1.7543 - 0.2766 * (1 + z) + 0.02039 * (1 + z)**2
+        beta = 0.2753 + 0.00351 * (1 + z) - 0.3038 * (1 + z)**0.0269
+        gamma = -0.01537 + 0.02102 * (1 + z)**(-0.1475)
+
+        # Calculate log10(c) following Correa+15
+        log10_c = alpha + beta * self.lgMv * (1 + gamma * self.lgMv**2)
+
+        # Calculate c
+        c = 10**log10_c
+
+        return c
+    
     def compute_profiles(self):
         Mv = 10. ** self.lgMv
         Mb = 10. ** self.lgMb
 
         # Prepare the CDM profile
-        halo_init = pr.NFW(Mv, self.c, Delta=100., z=0.)
+        c = self.calculate_c()
+        print(f"c vs c_sim : {c:.2f} {self.c:.2f} {self.lgMv:.2f}")
+        halo_init = pr.NFW(Mv, c, Delta=100., z=0.)
         # Prepare the baryonic profile
         disk = pr.Hernquist(Mb, self.r0)
         # Prepare the contracted DM halo profile
@@ -46,6 +65,7 @@ class GalaxyCrossSectionCalculator:
     def find_r1(self, halo_contra, disk, fDM, Reff):
         r1, rho_iso, r, gap, fDM, vel_disp = findr1(halo_contra, disk, fDM, self.r_FullRange, Reff)
         return r1, rho_iso, r, gap, fDM, vel_disp
+    
 
     def calculate_sigma(self, r1, rho, r, vel_disp):
         kpctocm = 3.086e16 * 1e5
@@ -77,4 +97,6 @@ class GalaxyCrossSectionCalculator:
         r1, rho_iso, r, gap, fDM, vel_disp = self.find_r1(halo_contra, disk, self.fDM, self.Reff)
         sigma, true_sigma = self.calculate_sigma(r1, rho_iso, r, vel_disp)
         return sigma, true_sigma, r1, rho_iso, r, gap, fDM
+    
+
 
