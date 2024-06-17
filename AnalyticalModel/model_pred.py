@@ -107,3 +107,31 @@ class Predictions:
         plt.tight_layout()
         plt.show()
 
+    def plot_fDM(self):
+        if self.df is None:
+            print("No data to plot.")
+            return
+        y_pred = self.df['y_pred'].values
+        error = self.df['error'].values
+        print(np.median(y_pred))
+        select = error/y_pred < 10  # select non-aberrant values
+        y_pred = y_pred[select]
+        M = 10**self.halo.Mstar
+        fDM = []
+        for i in range(len(M)):
+            fDM.append(np.interp(self.halo.GalaxyProjectedHalfLightRadius[i], self.halo.AxisRadius, self.halo.fDM[:,i]))
+        plt.scatter(np.array(M)[select],np.array(fDM)[select], c=y_pred, vmax = 1, s= 20)
+        plt.xscale('log')
+        plt.colorbar()
+        plt.show()
+
+    def hist(self):
+        if self.df is None:
+            print("No data to plot.")
+            return
+        y_pred = self.df['y_pred'].values
+        plt.hist(y_pred, bins=500)
+        plt.xlim([0,100])
+        plt.show()
+
+

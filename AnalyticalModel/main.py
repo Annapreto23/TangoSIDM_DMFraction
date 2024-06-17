@@ -8,4 +8,5 @@ predictions = Predictions(file_path, df_file_path)
 
 # Plot predictions
 predictions.plot_predictions(plot_errors=False)
-
+#predictions.plot_fDM()
+#predictions.hist()

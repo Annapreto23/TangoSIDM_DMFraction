@@ -31,8 +31,6 @@ class GalaxyCrossSectionCalculator:
         self.r0 = self.Reff / (1 + np.sqrt(2))  # [kpc]
         self.fDM = np.interp(self.Reff, self.halo.AxisRadius, self.halo.fDM[:,i])
     
-    import numpy as np
-
     def calculate_c(self, z=0):
 
         # Calculate alpha, beta, gamma
@@ -54,8 +52,8 @@ class GalaxyCrossSectionCalculator:
 
         # Prepare the CDM profile
         c = self.calculate_c()
-        print(f"c vs c_sim : {c:.2f} {self.c:.2f} {self.lgMv:.2f}")
-        halo_init = pr.NFW(Mv, self.c, Delta=100., z=0.)
+        #print(f"c vs c_sim : {c:.2f} {self.c:.2f} {self.lgMv:.2f}")
+        halo_init = pr.NFW(Mv, self.c, Delta=200., z=0.)
         # Prepare the baryonic profile
         disk = pr.Hernquist(Mb, self.r0)
         # Prepare the contracted DM halo profile
@@ -63,16 +61,19 @@ class GalaxyCrossSectionCalculator:
         return halo_init, halo_contra, disk
 
     def find_r1(self, halo_contra, disk, fDM, Reff):
-        r1, rho_iso, r, gap, fDM, vel_disp = findr1(halo_contra, disk, fDM, self.r_FullRange, Reff)
+        r1, rho_iso, r, gap, fDM, vel_disp, Ms = findr1(halo_contra, disk, fDM, self.r_FullRange, Reff)
+        #print(f"True M is {np.log10((10**self.lgMb)/2)} and computed M;is {np.log10(Ms)}")
         return r1, rho_iso, r, gap, fDM, vel_disp
     
 
     def calculate_sigma(self, r1, rho, r, vel_disp):
         kpctocm = 3.086e16 * 1e5
         kmtocm = 1e5
+        gyrtos = 1e9*24*60*60*365
 
         # Velocity dispersion
-        vel_disp *= kmtocm  # cm/s
+        vel_disp /= gyrtos
+        vel_disp *= kpctocm  # cm/s
 
         # Galaxy's age
         tage = 10 * 1e9 # years

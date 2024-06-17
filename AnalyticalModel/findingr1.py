@@ -31,6 +31,7 @@ def findr1(halo_contra, disk, fDM, r, Reff):
            gap = abs(f-fDM)
            final_f = f
            vel_disp = sigma0
+           M = Ms
 
-    return r1, rho_iso_r1, radius_r1, gap, final_f, vel_disp
+    return r1, rho_iso_r1, radius_r1, gap, final_f, vel_disp, M
 
